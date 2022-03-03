@@ -14,3 +14,5 @@ lint:
 	flake8 src
 	cd src && mypy
 
+dev:
+	watchmedo auto-restart --patterns '*.py' python bot.py

@@ -1,3 +1,5 @@
 python-dotenv
 httpx
 dadata
+python-telegram-bot
+ujson

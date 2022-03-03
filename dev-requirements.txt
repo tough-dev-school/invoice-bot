@@ -158,12 +158,15 @@ pytest-randomly==3.11.0
     # via -r dev-requirements.in
 python-dateutil==2.8.2
     # via freezegun
+pyyaml==6.0
+    # via watchdog
 rfc3986[idna2008]==1.5.0
     # via
     #   -c requirements.txt
     #   httpx
 six==1.16.0
     # via
+    #   -c requirements.txt
     #   flake8-print
     #   python-dateutil
 sniffio==1.2.0
@@ -182,6 +185,8 @@ typing-extensions==4.1.1
     # via
     #   flake8-pie
     #   mypy
+watchdog[watchmedo]==2.1.6
+    # via -r dev-requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

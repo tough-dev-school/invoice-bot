@@ -1,6 +1,9 @@
 -c requirements.txt
 
+watchdog[watchmedo]
+
 mypy
+
 freezegun
 pytest
 pytest-deadfixtures

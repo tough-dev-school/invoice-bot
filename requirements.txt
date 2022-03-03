@@ -6,10 +6,15 @@
 #
 anyio==3.5.0
     # via httpcore
+apscheduler==3.6.3
+    # via python-telegram-bot
+cachetools==4.2.2
+    # via python-telegram-bot
 certifi==2021.10.8
     # via
     #   httpcore
     #   httpx
+    #   python-telegram-bot
 charset-normalizer==2.0.12
     # via httpx
 dadata==21.10.1
@@ -28,10 +33,31 @@ idna==3.3
     #   rfc3986
 python-dotenv==0.19.2
     # via -r requirements.in
+python-telegram-bot==13.11
+    # via -r requirements.in
+pytz==2021.3
+    # via
+    #   apscheduler
+    #   python-telegram-bot
+pytz-deprecation-shim==0.1.0.post0
+    # via tzlocal
 rfc3986[idna2008]==1.5.0
     # via httpx
+six==1.16.0
+    # via apscheduler
 sniffio==1.2.0
     # via
     #   anyio
     #   httpcore
     #   httpx
+tornado==6.1
+    # via python-telegram-bot
+tzdata==2021.5
+    # via pytz-deprecation-shim
+tzlocal==4.1
+    # via apscheduler
+ujson==5.1.0
+    # via -r requirements.in
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
