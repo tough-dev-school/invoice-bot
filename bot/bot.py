@@ -11,9 +11,9 @@ from telegram.ext import Filters
 from telegram.ext import MessageHandler
 from telegram.ext import Updater
 
-from dadata_client import get_by_inn
-from item import DATABASE
-from item import parse_input
+from clients.dadata import get_by_inn
+from models.item import DATABASE
+from models.item import parse_input
 
 INN, CONFIRM_LEGAL_ENTITY, ADD_ITEM, CHANGE_PRICE_OR_AMOUNT_OF_LAST_ITEM = range(4)
 
@@ -110,6 +110,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     from dotenv import load_dotenv
+
     load_dotenv()
 
     main()

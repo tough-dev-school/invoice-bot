@@ -3,7 +3,7 @@ import os
 from dadata import Dadata
 from dotenv import load_dotenv
 
-from legal_entity import LegalEntity
+from models.legal_entity import LegalEntity
 
 load_dotenv()
 
