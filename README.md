@@ -14,6 +14,8 @@ $ echo TELEGRAM_TOKEN=100500:secret-from-botfather >> .env
 ```
 $ pip install --upgrade pip pip-tools
 $ pip-sync dev-requirements.txt requirements.txt
-$ make dev
+
+$ make dev  # start your bot
 ```
+
 
