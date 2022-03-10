@@ -4,8 +4,8 @@ from urllib.parse import urljoin
 from dotenv import load_dotenv
 import httpx
 
-from item import Item
-from legal_entity import LegalEntity
+from ..models.item import Item
+from ..models.legal_entity import LegalEntity
 
 load_dotenv()
 

@@ -1,9 +1,9 @@
 import logging
 import os
+from typing import TYPE_CHECKING
 
 from telegram import ReplyKeyboardMarkup
 from telegram import Update
-from telegram.ext import CallbackContext
 from telegram.ext import CommandHandler
 from telegram.ext import ConversationHandler
 from telegram.ext import Dispatcher
@@ -11,11 +11,14 @@ from telegram.ext import Filters
 from telegram.ext import MessageHandler
 from telegram.ext import Updater
 
-from clients.dadata import get_by_inn
-from models.item import DATABASE
-from models.item import parse_input
+from .clients.dadata import get_by_inn
+from .models.item import DATABASE
+from .models.item import parse_input
 
 INN, CONFIRM_LEGAL_ENTITY, ADD_ITEM, CHANGE_PRICE_OR_AMOUNT_OF_LAST_ITEM = range(4)
+
+if TYPE_CHECKING:
+    from .t import CallbackContext
 
 
 def enable_logging() -> None:
@@ -25,35 +28,39 @@ def enable_logging() -> None:
     )
 
 
-def start(update: Update, context: CallbackContext) -> int:
+def start(update: Update, context: 'CallbackContext') -> int:
     update.message.reply_text('Введите ИНН')
 
-    context.user_data['invoice'] = {}
+    context.user_data['invoice'] = {
+        'legal_entity': None,  # type: ignore
+        'items': [],
+    }
 
     return INN
 
 
-def inn(update: Update, context: CallbackContext) -> int | None:
+def inn(update: Update, context: 'CallbackContext') -> int | None:
     inn: str = update.message.text
 
     entities = get_by_inn(inn)
 
-    match len(entities):
-        case 0:
-            update.message.reply_text('Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде')
-            return
-        case 1:
-            context.user_data['invoice']['legal_entity'] = entities[0]
-            update.message.reply_text(
-                text=f'{entities[0]}. Если ошиблись — наберите /start',
-                reply_markup=ReplyKeyboardMarkup([[i['user_name']] for i in DATABASE.values()]),
-            )
-            return ADD_ITEM
+    if len(entities) == 1:
+        context.user_data['invoice']['legal_entity'] = entities[0]
+        update.message.reply_text(
+            text=f'{entities[0]}. Если ошиблись — наберите /start',
+            reply_markup=ReplyKeyboardMarkup([[i['user_name']] for i in DATABASE.values()]),  # type: ignore
+        )
+        return ADD_ITEM
+
+    if len(entities) == 0:
+        update.message.reply_text('Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде')
+    elif len(entities) > 2:
+        update.message.reply_text('WIP, пока не умеем работать с несколькими юрлицами')
 
 
-def add_item(update: Update, context: CallbackContext) -> int:
+def add_item(update: Update, context: 'CallbackContext') -> int:
     item = parse_input(update.message.text)
-    context.user_data['invoice']['item'] = item
+    context.user_data['invoice']['items'] = [item]
 
     legal_entity = context.user_data['invoice']['legal_entity']
 
@@ -65,15 +72,15 @@ def add_item(update: Update, context: CallbackContext) -> int:
     return CHANGE_PRICE_OR_AMOUNT_OF_LAST_ITEM
 
 
-def change_price_or_amount_of_last_item(update: Update, context: CallbackContext) -> None:
+def change_price_or_amount_of_last_item(update: Update, context: 'CallbackContext') -> None:
     number = int(update.message.text)
 
     if number < 100:
-        context.user_data['invoice']['item'].amount = number
+        context.user_data['invoice']['items'][0].amount = number
     else:
-        context.user_data['invoice']['item'].price = number
+        context.user_data['invoice']['items'][0].price = number
 
-    item = context.user_data['invoice']['item']
+    item = context.user_data['invoice']['items'][0]
     legal_entity = context.user_data['invoice']['legal_entity']
 
     update.message.reply_text(

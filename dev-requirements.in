@@ -12,7 +12,6 @@ pytest-freezegun
 pytest-mock
 pytest-randomly
 pytest-httpx
-flake8-absolute-import
 flake8-bugbear
 flake8-commas
 flake8-eradicate

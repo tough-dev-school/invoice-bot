@@ -1,3 +1,4 @@
 [flake8]
 max-line-length = 240
 ignore = PT001
+exclude=.git,venv

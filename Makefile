@@ -15,4 +15,4 @@ lint:
 	cd src && mypy
 
 dev:
-	watchmedo auto-restart --directory . --patterns '*.py' --recursive -- python -m bot.bot
+	watchmedo auto-restart --directory . --patterns '*.py' --recursive -- python -m src.bot
