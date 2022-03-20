@@ -15,11 +15,10 @@ class InvoiceData(TypedDict):
 
 class UserData(TypedDict):
     invoice: InvoiceData
-
+    entities: list[LegalEntity]
 
 class CallbackContext(_CallbackContext[UserData, dict, dict]):
     user_data: UserData
-
 
 class MessageUpdate(Update):
     message: Message

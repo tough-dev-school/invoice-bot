@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Item:
+    user_name: str
     name: str
     price: int | None = 0
     amount: int | None = 1
@@ -10,6 +11,7 @@ class Item:
     @classmethod
     def from_database(cls, database_record: dict) -> 'Item':
         return cls(
+            user_name=database_record['user_name'],
             name=database_record['name'],
             price=database_record['price'],
         )
