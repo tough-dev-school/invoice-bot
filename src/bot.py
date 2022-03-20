@@ -74,24 +74,14 @@ def inn(update: Update, context: 'CallbackContext') -> int | None:
     if len(context.user_data['entities']) == 0:
         update.message.reply_text('Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде')
 
-    # if len(entities) == 1:
-    #     context.user_data['invoice']['legal_entity'] = entities[0]
-    #     update.message.reply_text(
-    #         text=f'{entities[0]}. Если ошиблись — наберите /start',
-    #         reply_markup=ReplyKeyboardMarkup([[i['user_name']] for i in DATABASE.values()]),  # type: ignore
-    #     )
-    #     return ADD_ITEM
-    #
-    # if len(entities) == 0:
-    #     update.message.reply_text('Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде')
-    # elif len(entities) > 2:
-    #     update.message.reply_text('WIP, пока не умеем работать с несколькими юрлицами')
-
 
 def confirm_legal_entity(update: Update, context: 'CallbackContext') -> int:
     entities = context.user_data['entities']
 
-    legal_entity = [entity for entity in entities if entity.kpp == update.callback_query.data][0]
+    if len(entities) == 1:
+        legal_entity = entities[0]
+    else:
+        legal_entity = [entity for entity in entities if entity.kpp == update.callback_query.data][0]
 
     context.user_data['invoice']['legal_entity'] = legal_entity
 
