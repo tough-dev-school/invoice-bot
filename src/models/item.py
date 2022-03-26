@@ -3,10 +3,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Item:
-    user_name: str
     name: str
     price: int | None = 0
-    amount: int | None = 1
+    amount: int = 0
+    user_name: str = ''
 
     @classmethod
     def from_database(cls, database_record: dict) -> 'Item':

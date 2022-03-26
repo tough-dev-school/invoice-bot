@@ -1,29 +1,19 @@
+from typing import List
+
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
 
+from ..models.item import Item
+from ..models.legal_entity import LegalEntity
 
-def navigation_buttons(previous_step: str):
+
+def approve_buttons(text: str) -> List[List[InlineKeyboardButton]]:
     return [
         [
-            InlineKeyboardButton(text='В меню',
-                                 callback_data='navi_main_menu'),
-            InlineKeyboardButton(text='Назад',
-                                 callback_data='navi_' + previous_step),
+            InlineKeyboardButton(text=text,
+                                 callback_data='approved'),
         ],
     ]
-
-
-def approve_buttons(previous_step: str):
-    return [
-        [
-            InlineKeyboardButton(text='Все верно',
-                                 callback_data='item_ok'),
-        ],
-    ]
-
-
-def navigation_only_keyboard(previous_step: str):
-    return InlineKeyboardMarkup(navigation_buttons(previous_step))
 
 
 def main_menu_keyboard() -> InlineKeyboardMarkup:
@@ -40,15 +30,15 @@ def main_menu_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(buttons)
 
 
-def confirm_legal_entity_keyboard(previous_step: str) -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(approve_buttons(previous_step))
+def confirm_legal_entity_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(approve_buttons(text='Все верно'))
 
 
-def final_confirm_keyboard(previous_step: str) -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(approve_buttons(previous_step))
+def final_confirm_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(approve_buttons(text='Все верно, выставляем счет'))
 
 
-def select_by_kpp_keyboard(entities) -> InlineKeyboardMarkup:
+def select_by_kpp_keyboard(entities: list[LegalEntity]) -> InlineKeyboardMarkup:
     buttons = []
 
     for entity in entities:
@@ -59,12 +49,10 @@ def select_by_kpp_keyboard(entities) -> InlineKeyboardMarkup:
             ],
         )
 
-    # buttons.append(navigation_buttons(previous_step='inn')[0])
-
     return InlineKeyboardMarkup(buttons)
 
 
-def select_item_keyboard(items) -> InlineKeyboardMarkup:
+def select_item_keyboard(items: list[Item]) -> InlineKeyboardMarkup:
     buttons = []
 
     for item in items:
@@ -79,7 +67,7 @@ def select_item_keyboard(items) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(text='-',
                                      callback_data='item_minus_' + item.user_name),
                 InlineKeyboardButton(text=f'{item.amount} шт.',
-                                     callback_data='ss'),
+                                     callback_data='...'),
                 InlineKeyboardButton(text='+',
                                      callback_data='item_plus_' + item.user_name),
             ],
@@ -87,10 +75,8 @@ def select_item_keyboard(items) -> InlineKeyboardMarkup:
 
     buttons.append(
         [
-            InlineKeyboardButton(text='Готов',
+            InlineKeyboardButton(text='Готово',
                                  callback_data='item_finish'),
         ],
     )
-    # buttons.append(navigation_buttons(previous_step='inn')[0])
-
     return InlineKeyboardMarkup(buttons)
