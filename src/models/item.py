@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class Item:
     name: str
-    price: int | None = 0
+    price: int = 0
     amount: int = 0
     user_name: str = ''
 
