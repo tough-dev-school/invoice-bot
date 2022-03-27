@@ -67,10 +67,15 @@ def select_by_kpp_keyboard(entities: list[LegalEntity]) -> InlineKeyboardMarkup:
     buttons = []
 
     for entity in entities:
+        if entity.kpp is None:
+            kpp_for_callback = 0
+        else:
+            kpp_for_callback = entity.kpp
+
         buttons.append(
             [
                 InlineKeyboardButton(text=entity.name,
-                                     callback_data=entity.kpp),
+                                     callback_data=kpp_for_callback),
             ],
         )
 
