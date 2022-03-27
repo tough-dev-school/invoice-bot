@@ -177,7 +177,8 @@ def select_legal_entity_by_kpp(update: Update, context: 'CallbackContext') -> in
         return CONFIRM_LEGAL_ENTITY
 
     if len(context.user_data['entities']) == 0:
-        update.message.reply_text('Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде')
+        update.message.reply_text(text='Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде',
+                                  reply_markup=kb.wrong_inn_keyboard())
 
         return SELECT_LEGAL_ENTITY
 

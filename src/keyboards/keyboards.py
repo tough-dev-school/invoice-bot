@@ -28,6 +28,13 @@ def edit_button(text: str, previous_step: str) -> List[InlineKeyboardButton]:
     ]
 
 
+def wrong_inn_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup([
+        edit_button(text='Ввести инн заново',
+                    previous_step='legal_entity'),
+    ])
+
+
 def main_menu_keyboard() -> InlineKeyboardMarkup:
     buttons = [
         [
