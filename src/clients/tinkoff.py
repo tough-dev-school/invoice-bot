@@ -1,4 +1,6 @@
+from datetime import date
 import os
+from random import randint
 from urllib.parse import urljoin
 
 from dotenv import load_dotenv
@@ -35,7 +37,7 @@ def get_invoice(legal_entity: LegalEntity, items: list[Item]) -> str:
     result = post(
         url='v1/invoice/send',
         payload={
-            'invoiceNumber': '100501',
+            'invoiceNumber': generate_invoice_number(),
             'payer': legal_entity.to_tinkoff(),
             'items': [item.to_tinkoff() for item in items],
         },
@@ -45,6 +47,12 @@ def get_invoice(legal_entity: LegalEntity, items: list[Item]) -> str:
         raise TinkoffException(f'{result["errorCode"]}: {result["errorMessage"]}')
 
     return result['pdfUrl']
+
+
+def generate_invoice_number() -> str:
+    today = date.today().strftime('%d%m%Y')
+    digits = str(randint(1000, 9999))
+    return digits + today
 
 
 if __name__ == '__main__':

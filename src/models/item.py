@@ -4,12 +4,14 @@ from dataclasses import dataclass
 @dataclass
 class Item:
     name: str
-    price: int | None = 0
-    amount: int | None = 1
+    price: int = 0
+    amount: int = 0
+    user_name: str = ''
 
     @classmethod
     def from_database(cls, database_record: dict) -> 'Item':
         return cls(
+            user_name=database_record['user_name'],
             name=database_record['name'],
             price=database_record['price'],
         )
