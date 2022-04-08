@@ -3,3 +3,4 @@ httpx
 dadata
 python-telegram-bot
 ujson
+sentry_sdk

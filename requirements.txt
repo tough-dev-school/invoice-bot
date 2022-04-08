@@ -15,6 +15,7 @@ certifi==2021.10.8
     #   httpcore
     #   httpx
     #   python-telegram-bot
+    #   sentry-sdk
 charset-normalizer==2.0.12
     # via httpx
 dadata==21.10.1
@@ -43,6 +44,8 @@ pytz-deprecation-shim==0.1.0.post0
     # via tzlocal
 rfc3986[idna2008]==1.5.0
     # via httpx
+sentry-sdk==1.5.8
+    # via -r requirements.in
 six==1.16.0
     # via apscheduler
 sniffio==1.2.0
@@ -58,6 +61,8 @@ tzlocal==4.1
     # via apscheduler
 ujson==5.1.0
     # via -r requirements.in
+urllib3==1.26.9
+    # via sentry-sdk
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

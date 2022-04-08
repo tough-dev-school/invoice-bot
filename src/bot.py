@@ -2,6 +2,7 @@ import logging
 import os
 from typing import TYPE_CHECKING
 
+import sentry_sdk
 from telegram import Update
 from telegram.ext import CallbackQueryHandler
 from telegram.ext import CommandHandler
@@ -177,8 +178,10 @@ def select_legal_entity_by_kpp(update: Update, context: 'CallbackContext') -> in
         return CONFIRM_LEGAL_ENTITY
 
     if len(context.user_data['entities']) == 0:
-        update.message.reply_text(text='Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде',
-                                  reply_markup=kb.wrong_inn_keyboard())
+        update.message.reply_text(
+            text='Чё-т ничего не нашлось :( Попробуйте ещё раз или напишите Феде',
+            reply_markup=kb.wrong_inn_keyboard(),
+        )
 
         return SELECT_LEGAL_ENTITY
 
@@ -207,13 +210,28 @@ def send_invoice(update: Update, context: 'CallbackContext') -> int:
     text = 'Ура! Вас счет готов.' \
            'Если возникли ошибки — напишите пожалуйста на support@education.borshev.com.'
 
-    update.callback_query.message.reply_text(text=text,
-                                             reply_markup=kb.link_to_invoice_keyboard(
-                                                 url=get_invoice(legal_entity=legal_entity,
-                                                                 items=items)))
+    update.callback_query.message.reply_text(
+        text=text,
+        reply_markup=kb.link_to_invoice_keyboard(
+            url=get_invoice(
+                legal_entity=legal_entity,
+                items=items,
+            ),
+        ),
+    )
 
     return MAIN_MENU
 
+
+def bot_name() -> str | None:
+    return os.getenv('BOT_NAME', None)
+
+
+def init_sentry() -> None:
+    sentry_dsn = os.getenv('SENTRY_DSN', None)
+
+    if sentry_dsn:
+        sentry_sdk.init(sentry_dsn)
 
 def main() -> None:
     bot_token = os.getenv('TELEGRAM_TOKEN')
@@ -244,8 +262,18 @@ def main() -> None:
         ),
     )
 
-    enable_logging()
-    bot.start_polling()
+    if app_name := bot_name() is not None:  # in production
+        init_sentry()
+        bot.start_webhook(
+            listen='0.0.0.0',
+            port=8000,
+            url_path=bot_token,
+            webhook_url=f'https://{app_name}.bots.tough-dev.school/' + bot_token,
+        )
+
+    else:  # dev machine
+        enable_logging()
+        bot.start_polling()
 
 
 if __name__ == '__main__':
