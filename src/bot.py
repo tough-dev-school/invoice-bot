@@ -263,13 +263,13 @@ def main() -> None:
         ),
     )
 
-    if app_name := bot_name() is not None:  # in production
+    if app_name := bot_name():  # in production
         init_sentry()
         bot.start_webhook(
             listen='0.0.0.0',
             port=8000,
             url_path=bot_token,
-            webhook_url=f'https://{app_name}.bots.tough-dev.school/' + bot_token,
+            webhook_url=f'https://{app_name}.tough-dev.school/' + bot_token,
         )
 
     else:  # dev machine
