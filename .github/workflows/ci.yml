@@ -76,3 +76,24 @@ jobs:
             ghcr.io/${{ steps.image.outputs.lowercase }}:${{ github.sha }}
             ${{ secrets.CONTAINER_REGISTRY_HOST }}/${{ steps.image.outputs.lowercase }}:latest
             ${{ secrets.CONTAINER_REGISTRY_HOST }}/${{ steps.image.outputs.lowercase }}:${{ github.sha }}
+
+
+  deploy:
+    needs: build-docker-image
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read image identifiers
+        id: image
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
+
+      - name: Update backend image
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: circle
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: docker service update invoice_bot --image ${{ secrets.CONTAINER_REGISTRY_HOST }}/${{ steps.image.outputs.lowercase }}:${{ github.sha }} --with-registry-auth
+
