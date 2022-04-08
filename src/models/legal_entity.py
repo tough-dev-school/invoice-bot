@@ -6,7 +6,7 @@ from dataclasses import dataclass
 class LegalEntity:
     name: str
     inn: str
-    kpp: str
+    kpp: str | None
 
     def __str__(self) -> str:
         if self.kpp is None:

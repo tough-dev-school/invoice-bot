@@ -233,6 +233,7 @@ def init_sentry() -> None:
     if sentry_dsn:
         sentry_sdk.init(sentry_dsn)
 
+
 def main() -> None:
     bot_token = os.getenv('TELEGRAM_TOKEN')
 
