@@ -33,17 +33,17 @@ DATABASE = {
     'aa-3-self': {
         'user_name': 'АА-3 самостоятельный',
         'name': 'Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «самостоятельный»)',
-        'price': 10_000,
+        'price': 15_500,
     },
     'aa-3-full': {
         'user_name': 'АА-3 тусовка',
         'name': 'Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «в тусовке»)',
-        'price': 20_000,
+        'price': 26_000,
     },
     'aa-3-vip': {
         'user_name': 'АА-3 VIP',
         'name': 'Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «VIP»)',
-        'price': 32_000,
+        'price': 40_000,
     },
 }
 
@@ -64,9 +64,9 @@ def parse_input(user_input: str) -> Item:
 
 
 if __name__ == '__main__':
-    assert get_by_slug_or_name('aa-3-self') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «самостоятельный»)', price=10_000, amount=1)
-    assert get_by_slug_or_name('АА-3 тусовка') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «в тусовке»)', price=20_000, amount=1)
-    assert get_by_slug_or_name('Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «VIP»)') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «VIP»)', price=32_000, amount=1)  # noqa
+    assert get_by_slug_or_name('aa-3-self') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «самостоятельный»)', price=15_500, amount=1)
+    assert get_by_slug_or_name('АА-3 тусовка') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «в тусовке»)', price=26_000, amount=1)
+    assert get_by_slug_or_name('Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «VIP»)') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «VIP»)', price=40_000, amount=1)  # noqa
 
     assert parse_input('aa-3-self') == Item(name='Участие в курсе «Асинхронная Архитектура на плошадке education.borshev.com (тариф «самостоятельный»)', price=10_000, amount=1)
     assert parse_input('Макароны') == Item(name='Макароны', price=0, amount=1)
