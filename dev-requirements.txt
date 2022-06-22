@@ -21,10 +21,6 @@ certifi==2021.10.8
     #   -c requirements.txt
     #   httpcore
     #   httpx
-charset-normalizer==2.0.12
-    # via
-    #   -c requirements.txt
-    #   httpx
 cognitive-complexity==1.2.0
     # via flake8-cognitive-complexity
 eradicate==2.0.0
@@ -94,11 +90,11 @@ h11==0.12.0
     # via
     #   -c requirements.txt
     #   httpcore
-httpcore==0.14.7
+httpcore==0.15.0
     # via
     #   -c requirements.txt
     #   httpx
-httpx==0.22.0
+httpx==0.23.0
     # via
     #   -c requirements.txt
     #   pytest-httpx
@@ -147,7 +143,7 @@ pytest-env==0.6.2
     # via -r dev-requirements.in
 pytest-freezegun==0.4.2
     # via -r dev-requirements.in
-pytest-httpx==0.20.0
+pytest-httpx==0.21.0
     # via -r dev-requirements.in
 pytest-mock==3.7.0
     # via -r dev-requirements.in
