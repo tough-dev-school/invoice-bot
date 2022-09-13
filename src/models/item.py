@@ -30,20 +30,20 @@ class Item:
 
 
 DATABASE = {
-    'teamlead-4-self': {
-        'user_name': 'СТ-4 самостоятельный',
-        'name': 'Участие в курсе «Стать Тимлидом» на плошадке education.borshev.com (тариф «самостоятельный»)',
-        'price': 14_000,
+    'popug-4-self': {
+        'user_name': 'АА-4 самостоятельный',
+        'name': 'Участие в курсе «Асинхронная архитектура» на плошадке education.borshev.com 23.09.2022 – 27.10.2022 (тариф «самостоятельный»)',
+        'price': 15_500,
     },
-    'teamlead-4-full': {
-        'user_name': 'СТ-4 тусовка',
-        'name': 'Участие в курсе «Стать Тимлидом» на плошадке education.borshev.com (тариф «в тусовке»)',
-        'price': 24_000,
+    'popug-4-full': {
+        'user_name': 'АА-4 тусовка',
+        'name': 'Участие в курсе «Асинхронная архитектура» на плошадке education.borshev.com (тариф «в тусовке»)',
+        'price': 26_000,
     },
-    'teamlead-4-vip': {
-        'user_name': 'СТ-4 VIP',
-        'name': 'Участие в курсе «Стать Тимлидом» на плошадке education.borshev.com (тариф «VIP»)',
-        'price': 65_000,
+    'popug-4-vip': {
+        'user_name': 'АА-4 VIP',
+        'name': 'Участие в курсе «Асинхронная архитектура» на плошадке education.borshev.com  (тариф «VIP»)',
+        'price': 40_000,
     },
 }
 
